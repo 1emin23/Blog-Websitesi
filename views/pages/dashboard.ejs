@@ -25,12 +25,12 @@
                                     <%= post.content.substring(0, 100) %>...
                                 </p>
                                 <p class="post-meta">
-                                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    <span style="width: 100%; display: flex; justify-content: space-between;">
+                                    <span class="date-info">
+                                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
                                         <span>
                                             Created at:
                                             <%= post.createdAt ? `${new Date(post.createdAt).toLocaleDateString('tr-TR',
@@ -38,17 +38,27 @@
                                                 Date(post.createdAt).toLocaleTimeString('tr-TR', { hour: '2-digit' ,
                                                 minute: '2-digit' })}` : 'Bilinmiyor' %>
                                         </span>
+                                    </span>
+                                    <% if (post.lastUpdateDate) { %>
                                         <% if (post.createdAt !==post.lastUpdateDate) { %>
-                                            <span>
-                                                Last Updated:
-                                                <%= post.lastUpdateDate ? `${new
-                                                    Date(post.lastUpdateDate).toLocaleDateString('tr-TR', {
-                                                    day: '2-digit' , month: 'long' , year: 'numeric' })} - ${new
-                                                    Date(post.lastUpdateDate).toLocaleTimeString('tr-TR', {
-                                                    hour: '2-digit' , minute: '2-digit' })}` : 'Bilinmiyor' %>
+                                            <span class="date-info">
+                                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                                <span>
+                                                    Last Updated:
+                                                    <%= `${new Date(post.lastUpdateDate).toLocaleDateString('tr-TR', {
+                                                        day: '2-digit' , month: 'long' , year: 'numeric' })} - ${new
+                                                        Date(post.lastUpdateDate).toLocaleTimeString('tr-TR', {
+                                                        hour: '2-digit' , minute: '2-digit' })}` %>
+                                                </span>
+                                                <% } %>
+
                                             </span>
                                             <% } %>
-                                    </span>
                                 </p>
                                 <div class="post-actions">
                                     <a href="/dashboard/edit/post/<%= post._id %>" class="action-button">Düzenle</a>
@@ -150,6 +160,7 @@
 
         .post-meta {
             display: flex;
+            flex-direction: column;
             align-items: center;
             font-size: 0.875rem;
             color: #6b7280;
@@ -230,6 +241,21 @@
             .post-title {
                 font-size: 1.125rem;
             }
+
+            .date-info {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+        }
+
+        .date-info {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
     </style>
 

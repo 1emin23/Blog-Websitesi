@@ -13,7 +13,7 @@
                                     <%= post.title %>
                                 </h3>
                                 <p class="post-content">
-                                    <%= post.content.substring(0, 100) %>...
+                                    <%= post.content.substring(0, 100) %>
                                 </p>
                                 <p class="post-meta">
                                     <span class="date-info">
@@ -30,23 +30,26 @@
                                                 minute: '2-digit' })}` : 'Bilinmiyor' %>
                                         </span>
                                     </span>
-                                    <% if (post.createdAt !==post.lastUpdateDate) { %>
-                                        <span class="date-info">
-                                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                                </path>
-                                            </svg>
-                                            <span>
-                                                Last Updated:
-                                                <%= post.lastUpdateDate ? `${new
-                                                    Date(post.lastUpdateDate).toLocaleDateString('tr-TR', {
-                                                    day: '2-digit' , month: 'long' , year: 'numeric' })} - ${new
-                                                    Date(post.lastUpdateDate).toLocaleTimeString('tr-TR', {
-                                                    hour: '2-digit' , minute: '2-digit' })}` : 'Bilinmiyor' %>
+                                    <% if (post.lastUpdateDate) { %>
+                                        <% if (post.createdAt !==post.lastUpdateDate) { %>
+                                            <span class="date-info">
+                                                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                                <span>
+                                                    Last Updated:
+                                                    <%= `${new Date(post.lastUpdateDate).toLocaleDateString('tr-TR', {
+                                                        day: '2-digit' , month: 'long' , year: 'numeric' })} - ${new
+                                                        Date(post.lastUpdateDate).toLocaleTimeString('tr-TR', {
+                                                        hour: '2-digit' , minute: '2-digit' })}` %>
+                                                </span>
+                                                <% } %>
+
                                             </span>
-                                        </span>
-                                        <% } %>
+                                            <% } %>
                                 </p>
                                 <a href="/post/detail/<%= post._id %>" class="action-button">Detay</a>
                             </div>
@@ -159,6 +162,11 @@
         }
 
         @media (max-width: 768px) {
+            .action-button {
+                width: 100%;
+                text-align: center;
+            }
+
             .page-container {
                 padding: 1.5rem 1rem;
             }

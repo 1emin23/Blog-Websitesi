@@ -50,8 +50,8 @@ router.get("/edit/post/:id", ensureAdmin, async (req, res) => {
 
 router.post("/edit/post/:id", ensureAdmin, async (req, res) => {
   const postId = req.params.id.slice(0);
-  console.log("req.body:", req.body);
   const { title, content } = req.body;
+
   if (!postId) return res.redirect("/dashboard");
   try {
     await Post.findByIdAndUpdate(

@@ -20,11 +20,6 @@ router.get("/login", noCache, (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(
-    "suan post: /login endpointinde ve email ve password degerleri",
-    email,
-    password
-  );
 
   //* Email ve Password alanlarının bos deger kontrolu
   if (!email || !password)
@@ -64,7 +59,6 @@ router.post("/login", async (req, res) => {
     username: user.username,
     role: user.user_role,
   };
-  console.log("kullanıcı session'a kaydedildi", req.session.user);
 
   //* Admin ise admin sayfasına yonlendir
   if (user.user_role === "admin") return res.redirect("/dashboard");
@@ -119,8 +113,6 @@ router.post("/register", async (req, res) => {
       email: newUser.email,
       role: newUser.user_role,
     };
-    console.log("session bilgileri", req.session.user);
-
     return res.redirect("/");
   } catch (error) {
     console.log("user olustururken veritabanı hata verdi: ", error);

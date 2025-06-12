@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+
 exports.home = async (req, res) => {
   const posts = await Post.find().sort({ createdAt: -1 });
   return res.render("pages/home", {
