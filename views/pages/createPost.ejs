@@ -1,0 +1,121 @@
+<%- include('../partials/header') %>
+
+    <div class="page-container">
+        <div class="content-wrapper">
+            <h2 class="section-title">Yeni Yazı</h2>
+            <form action="/dashboard/create" method="POST" class="form">
+                <% if (createError) { %>
+                    <p class="error-message">
+                        <%= createError %>
+                    </p>
+                    <% } %>
+                        <div class="form-group">
+                            <label for="title">Başlık</label>
+                            <input type="text" id="title" name="title" required class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">İçerik</label>
+                            <textarea id="content" name="content" rows="10" required class="form-input"></textarea>
+                        </div>
+                        <button type="submit" class="action-button">Oluştur</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .page-container {
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #1a202c;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+        }
+
+        .action-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .action-button:hover {
+            background: #4338ca;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <%- include('../partials/footer') %>

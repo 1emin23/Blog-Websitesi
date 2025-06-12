@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        <%= title || 'Mini Blog' %>
+    </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:visited,
+        a:active,
+        a:focus {
+            outline: none;
+        }
+
+        .header-default {
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-default h1 a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a202c;
+            transition: color 0.3s;
+        }
+
+        .header-default h1 a:hover {
+            color: #4f46e5;
+        }
+
+        .header-default nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            background: #4f46e5;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            min-width: 120px;
+            z-index: 200;
+        }
+
+        .profile-dropdown.show-dropdown {
+            display: block;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+            transition: background 0.3s;
+        }
+
+        .profile-dropdown a:hover {
+            background: #f0f2f5;
+            color: #4f46e5;
+        }
+
+        .header-admin {
+            background: #1e293b;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-admin h1 a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .header-admin h1 a:hover {
+            color: #60a5fa;
+        }
+
+        .header-admin nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-admin nav a {
+            font-size: 0.875rem;
+            color: #fff;
+            background: #3b82f6;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .header-admin nav a:hover {
+            background: #2563eb;
+        }
+
+        footer {
+            background: #e5e7eb;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .user-action-buttons {
+            display: inline-block;
+            text-decoration: none;
+            color: #4b5563;
+            background-color: whitesmoke;
+            border: 2px solid transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .user-action-buttons:hover {
+            text-decoration: none;
+            color: #4f46e5;
+            background-color: whitesmoke;
+            border: 2px solid black;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-action-buttons:visited,
+        .user-action-buttons:active,
+        .user-action-buttons:focus {
+            color: #4b5563;
+            text-decoration: none;
+            outline: none;
+        }
+
+        @media (max-width: 768px) {
+
+            .header-default,
+            .header-admin {
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-default nav,
+            .header-admin nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+
+            .profile-dropdown {
+                top: 50px;
+                right: 0;
+                min-width: 100px;
+            }
+
+            .user-action-buttons {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <% const isAdminPage=title==='Yönetim Paneli' || title==='Yeni Yazı' || title.includes('Edit Post'); %>
+        <% if (user && user.role==='admin' && isAdminPage) { %>
+            <header class="header-admin">
+                <h1><a href="/dashboard">MiniBlog Admin</a></h1>
+                <nav>
+                    <a href="/dashboard">Yönetim Paneli</a>
+                    <a href="/dashboard/create">Yeni Yazı</a>
+                    <a href="/logout">Çıkış Yap</a>
+                </nav>
+            </header>
+            <% } else { %>
+                <header class="header-default">
+                    <h1><a href="/">MiniBlog</a></h1>
+                    <nav>
+                        <% if (!user) { %>
+                            <a href="/login" class="user-action-buttons">Giriş Yap</a>
+                            <a href="/register" class="user-action-buttons">Kayıt Ol</a>
+                            <% } else { %>
+                                <% if (user.role==='admin' ) { %>
+                                    <a href="/dashboard">Yönetim Paneli</a>
+                                    <% } %>
+                                        <div class="profile-container">
+                                            <div class="profile-icon" id="profileToggle">
+                                                <%= user.username ? user.username.charAt(0).toUpperCase() : '?' %>
+                                            </div>
+                                            <div class="profile-dropdown" id="profileDropdown">
+                                                <a href="/user/settings">Ayarlar</a>
+                                                <a href="/logout">Çıkış Yap</a>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                    </nav>
+                </header>
+                <% } %>
+
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            const toggleBtn = document.getElementById("profileToggle");
+                            const dropdown = document.getElementById("profileDropdown");
+
+                            if (toggleBtn && dropdown) {
+                                toggleBtn.addEventListener("click", (e) => {
+                                    e.stopPropagation();
+                                    dropdown.classList.toggle("show-dropdown");
+                                });
+
+                                document.addEventListener("click", (event) => {
+                                    if (!toggleBtn.contains(event.target) && !dropdown.contains(event.target)) {
+                                        dropdown.classList.remove("show-dropdown");
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<%- include('../partials/header') %>
+
+    <div class="page-container">
+        <div class="content-wrapper">
+            <h2 class="section-title">Ayarlar</h2>
+            <% if (locals.user.role==='admin' ) { %>
+                <p class="admin-note">Admin Yetkileriniz Var</p>
+                <% } %>
+                    <form action="/user/settings" method="POST" class="form">
+                        <% if (locals.errorMessage) { %>
+                            <p class="error-message">
+                                <%= locals.errorMessage %>
+                            </p>
+                            <% } %>
+                                <% if (locals.successMessage) { %>
+                                    <p class="success-message">
+                                        <%= locals.successMessage %>
+                                    </p>
+                                    <% } %>
+                                        <div class="form-group">
+                                            <label for="email">E-posta</label>
+                                            <input type="email" id="email" name="email"
+                                                value="<%= locals.user.email || '' %>" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Yeni Şifre (boş bırakırsanız değişmez)</label>
+                                            <input type="password" id="password" name="password" class="form-input">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirmPassword">Yeni Şifreyi Onayla</label>
+                                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                                class="form-input">
+
+                                            <% if (locals.passwordMatchError) { %>
+                                                <span class="error-message">
+                                                    <%= locals.passwordMatchError %>
+                                                </span>
+                                                <% } %>
+                                        </div>
+                                        <button type="submit" class="action-button">Ayarları Kaydet</button>
+                    </form>
+        </div>
+    </div>
+
+    <script>
+        const error_message = document.querySelector('.error-message');
+        const success_message = document.querySelector('.success-message');
+        if (error_message) {
+            setTimeout(() => {
+                error_message.remove();
+            }, 3000);
+        }
+        if (success_message) {
+            setTimeout(() => {
+                success_message.remove();
+            }, 3000);
+        }
+    </script>
+
+    <style>
+        .page-container {
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .content-wrapper {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .admin-note {
+            color: #4f46e5;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .form {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .error-message {
+            display: inline-block;
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.875rem;
+            padding: .1rem .3rem;
+            margin-top: .5rem;
+            border-radius: 0.1rem;
+            text-align: center;
+        }
+
+        .success-message {
+            background-color: #10b981;
+            color: white;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+            border-radius: 0.1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #1a202c;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .action-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: #4f46e5;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .action-button:hover {
+            background: #4338ca;
+        }
+
+        @media (max-width: 768px) {
+            .page-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+
+    <%- include('../partials/footer') %>
