@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 // 📁 Rotalar
 app.use("/", require("./routes/index"));
-app.use("/", require("./routes/auth"));
+app.use("/auth", require("./routes/auth"));
 app.use("/dashboard", require("./routes/admin"));
 app.use("/user", require("./routes/user"));
 

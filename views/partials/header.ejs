@@ -7,18 +7,42 @@
     <title>
         <%= title || 'Mini Blog' %>
     </title>
+
     <style>
+        /* ====== Temel & Flex düzeni ====== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html,
         body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            /* footer’ı alta bastırmak için  */
+            flex-direction: column;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f0f2f5;
+            background: #f0f2f5;
             color: #333;
             line-height: 1.6;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+
+        /* içerik alanı esner          */
+        footer {
+            flex-shrink: 0;
+            background: #e5e7eb;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: .875rem;
+            color: #4b5563;
         }
 
         a {
@@ -32,9 +56,10 @@
             outline: none;
         }
 
+        /* ====== Header (kullanıcı) ====== */
         .header-default {
             background: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -48,7 +73,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #1a202c;
-            transition: color 0.3s;
+            transition: color .3s;
         }
 
         .header-default h1 a:hover {
@@ -61,11 +86,12 @@
             gap: 1.5rem;
         }
 
-        .profile-container {
+        /* ====== Profil ikonu (nav) ====== */
+        .nav-profile-container {
             position: relative;
         }
 
-        .profile-icon {
+        .nav-profile-icon {
             width: 32px;
             height: 32px;
             background: #4f46e5;
@@ -79,35 +105,36 @@
             cursor: pointer;
         }
 
-        .profile-dropdown {
+        .nav-profile-dropdown {
             display: none;
             position: absolute;
             top: 40px;
             right: 0;
             background: #fff;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
             border-radius: 6px;
             min-width: 120px;
             z-index: 200;
         }
 
-        .profile-dropdown.show-dropdown {
+        .nav-profile-dropdown.show-dropdown {
             display: block;
         }
 
-        .profile-dropdown a {
+        .nav-profile-dropdown a {
             display: block;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
+            padding: .5rem 1rem;
+            font-size: .875rem;
             color: #4b5563;
-            transition: background 0.3s;
+            transition: background .3s;
         }
 
-        .profile-dropdown a:hover {
+        .nav-profile-dropdown a:hover {
             background: #f0f2f5;
             color: #4f46e5;
         }
 
+        /* ====== Header (admin) ====== */
         .header-admin {
             background: #1e293b;
             color: #fff;
@@ -124,7 +151,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #fff;
-            transition: color 0.3s;
+            transition: color .3s;
         }
 
         .header-admin h1 a:hover {
@@ -138,12 +165,12 @@
         }
 
         .header-admin nav a {
-            font-size: 0.875rem;
+            font-size: .875rem;
             color: #fff;
             background: #3b82f6;
-            padding: 0.5rem 1rem;
+            padding: .5rem 1rem;
             border-radius: 6px;
-            transition: background 0.3s;
+            transition: background .3s;
         }
 
         .header-admin nav a:hover {
@@ -157,36 +184,28 @@
             cursor: pointer;
         }
 
-        footer {
-            background: #e5e7eb;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 3rem;
-            font-size: 0.875rem;
-            color: #4b5563;
-        }
-
+        /* ====== Ortak buton ====== */
         .user-action-buttons {
             display: inline-block;
-            text-decoration: none;
             color: #4b5563;
-            background-color: whitesmoke;
+            background: whitesmoke;
             border: 2px solid transparent;
-            padding: 0.5rem 1rem;
+            padding: .5rem 1rem;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all .3s;
             cursor: pointer;
         }
 
         .user-action-buttons:hover {
             color: #4f46e5;
-            border: 2px solid black;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid #000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1)
         }
 
-        @media (max-width: 768px) {
+        /* ====== Mobil ayarları ====== */
+        @media(max-width:768px) {
 
             .header-default,
             .header-admin {
@@ -197,12 +216,12 @@
             .header-default nav {
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 0.5rem;
+                gap: .5rem;
             }
 
             .user-action-buttons {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.875rem;
+                padding: .4rem .8rem;
+                font-size: .875rem;
             }
 
             #adminMenuToggle {
@@ -214,13 +233,13 @@
             .header-admin nav {
                 display: none;
                 flex-direction: column;
-                background-color: #1e293b;
+                background: #1e293b;
                 padding: 1rem;
                 position: absolute;
                 top: 90px;
                 right: .1rem;
                 border-radius: 6px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, .2);
             }
 
             .header-admin nav.show {
@@ -232,28 +251,26 @@
             nav.show a {
                 width: 100%;
             }
-
-
         }
     </style>
 </head>
 
 <body>
-    <% const isAdminPage=title==='Yönetim Paneli' || title==='Yeni Yazı' || title.includes('Edit Post'); %>
+    <% const isAdminPage=title==='Yönetim Paneli' || title==='Yeni Yazı' || (title && title.includes('Edit Post')); %>
         <% if (user && user.role==='admin' && isAdminPage) { %>
             <header class="header-admin">
                 <h1><a href="/dashboard">MiniBlog Admin</a></h1>
-                <div id="adminMenuToggle" class="profile-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="white" width="24"
+                <button id="adminMenuToggle" class="nav-profile-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="white" viewBox="0 0 24 24" width="24"
                         height="24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                </div>
+                </button>
                 <nav id="adminNav">
                     <a href="/dashboard">Yönetim Paneli</a>
                     <a href="/dashboard/create">Yeni Yazı</a>
-                    <a href="/logout">Çıkış Yap</a>
+                    <a href="/auth/logout">Çıkış Yap</a>
                 </nav>
             </header>
             <% } else { %>
@@ -261,19 +278,19 @@
                     <h1><a href="/">MiniBlog</a></h1>
                     <nav>
                         <% if (!user) { %>
-                            <a href="/login" class="user-action-buttons">Giriş Yap</a>
-                            <a href="/register" class="user-action-buttons">Kayıt Ol</a>
+                            <a href="/auth/login" class="user-action-buttons">Giriş Yap</a>
+                            <a href="/auth/register" class="user-action-buttons">Kayıt Ol</a>
                             <% } else { %>
-                                <% if (user.role==='admin' ) { %>
-                                    <a href="/dashboard">Yönetim Paneli</a>
+                                <% if (user.role==='admin' ){ %><a href="/dashboard">Yönetim Paneli</a>
                                     <% } %>
-                                        <div class="profile-container">
-                                            <div class="profile-icon" id="profileToggle">
+                                        <div class="nav-profile-container">
+                                            <div class="nav-profile-icon" id="profileToggle">
                                                 <%= user.username ? user.username.charAt(0).toUpperCase() : '?' %>
                                             </div>
-                                            <div class="profile-dropdown" id="profileDropdown">
+                                            <div class="nav-profile-dropdown" id="profileDropdown">
                                                 <a href="/user/settings">Ayarlar</a>
-                                                <a href="/logout">Çıkış Yap</a>
+                                                <a href="/user/profile">Profilim</a>
+                                                <a href="/auth/logout">Çıkış Yap</a>
                                             </div>
                                         </div>
                                         <% } %>
@@ -281,34 +298,23 @@
                 </header>
                 <% } %>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            const toggleBtn = document.getElementById("profileToggle");
-                            const dropdown = document.getElementById("profileDropdown");
+                    <main> <!--  ----  Sayfa içeriği buraya gelecek  ---- -->
 
-                            if (toggleBtn && dropdown) {
-                                toggleBtn.addEventListener("click", (e) => {
-                                    e.stopPropagation();
-                                    dropdown.classList.toggle("show-dropdown");
-                                });
-
-                                document.addEventListener("click", (event) => {
-                                    if (!toggleBtn.contains(event.target) && !dropdown.contains(event.target)) {
-                                        dropdown.classList.remove("show-dropdown");
-                                    }
-                                });
-                            }
-
-                            const adminToggle = document.getElementById("adminMenuToggle");
-                            const adminNav = document.getElementById("adminNav");
-
-                            if (adminToggle && adminNav) {
-                                adminToggle.addEventListener("click", () => {
-                                    adminNav.classList.toggle("show");
-                                });
-                            }
-                        });
-                    </script>
-</body>
-
-</html>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const t = document.getElementById('profileToggle'),
+                                    d = document.getElementById('profileDropdown');
+                                if (t && d) {
+                                    t.addEventListener('click', e => {
+                                        e.stopPropagation(); d.classList.toggle('show-dropdown');
+                                    });
+                                    document.addEventListener('click', e => {
+                                        if (!t.contains(e.target) && !d.contains(e.target))
+                                            d.classList.remove('show-dropdown');
+                                    });
+                                }
+                                const aT = document.getElementById('adminMenuToggle'),
+                                    aN = document.getElementById('adminNav');
+                                if (aT && aN) { aT.addEventListener('click', () => aN.classList.toggle('show')); }
+                            });
+                        </script>

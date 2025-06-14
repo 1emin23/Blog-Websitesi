@@ -3,13 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-// Cache kontrol middleware'i
-const noCache = (req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
-  next();
-};
-
-router.get("/login", noCache, (req, res) => {
+router.get("/login", (req, res) => {
   res.render("pages/login", {
     title: "Giriş Yap",
     loginError: null,
@@ -66,7 +60,7 @@ router.post("/login", async (req, res) => {
   return res.redirect("/");
 });
 
-router.get("/register", noCache, (req, res) => {
+router.get("/register", (req, res) => {
   res.render("pages/register", {
     title: "Kayıt Ol",
     registerError: null,

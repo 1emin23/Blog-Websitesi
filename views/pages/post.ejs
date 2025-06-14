@@ -1,0 +1,252 @@
+<div class="post-card animate-fade-in">
+    <!-- Başlık -->
+    <h3 class="post-title">
+        <%= post.title %>
+    </h3>
+
+    <!-- İçerik (ilk 4 satır gösteriliyor) -->
+    <p class="post-content truncated">
+        <%= post.content %>
+    </p>
+    <% if (post.content.length> 300) { %>
+        <button class="toggle-content" onclick="toggleContent(this)" data-state="collapsed">devamını göster…</button>
+        <% } %>
+
+            <!-- Tarih bilgileri -->
+            <p class="post-meta">
+                <span class="date-info">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span>
+                        Created at:
+                        <%= new Date(post.createdAt).toLocaleDateString('tr-TR', { day: '2-digit' , month: 'long' ,
+                            year: 'numeric' }) %> -
+                            <%= new Date(post.createdAt).toLocaleTimeString('tr-TR', { hour: '2-digit' ,
+                                minute: '2-digit' }) %>
+                    </span>
+                </span>
+
+                <% if (post.lastUpdateDate && post.createdAt !==post.lastUpdateDate) { %>
+                    <span class="date-info">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span>
+                            Last updated:
+                            <%= new Date(post.lastUpdateDate).toLocaleDateString('tr-TR', { day: '2-digit' ,
+                                month: 'long' , year: 'numeric' }) %> -
+                                <%= new Date(post.lastUpdateDate).toLocaleTimeString('tr-TR', { hour: '2-digit' ,
+                                    minute: '2-digit' }) %>
+                        </span>
+                    </span>
+                    <% } %>
+            </p>
+
+            <!-- Beğeni ve yorum: her zaman gösterilir -->
+            <div class="post-actions">
+                <div class="interaction-buttons">
+                    <!-- Like -->
+                    <button class="like-button" onclick="handleLikeEvent(this)" data-post-id="<%= post._id %>"
+                        data-liked="<%= user && post.likes.includes(user.id) ? 'true' : 'false' %>">
+                        <svg class="icon heart-icon <%= user && post.likes.includes(user.id) ? 'filled' : '' %>"
+                            viewBox="0 0 24 24">
+                            <path class="heart-unfilled" fill="none" stroke="currentColor" stroke-width="2"
+                                d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" />
+                            <path class="heart-filled" fill="#ef4444"
+                                d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" />
+                        </svg>
+                        <span class="like-count">
+                            <%= post.likes.length || 0 %>
+                        </span>
+                    </button>
+
+                    <!-- Comment -->
+                    <a href="/post/detail/comments/<%= post._id %>" class="comment-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                        </svg>
+                        <span class="comment-count">
+                            <%= post.comments.length || 0 %>
+                        </span>
+                    </a>
+                </div>
+            </div>
+</div>
+
+
+<style>
+    /* -------- Kart & içerik -------- */
+    .post-card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+        padding: 1.5rem;
+        margin-bottom: 1.25rem;
+        transition: transform .25s ease;
+    }
+
+    .post-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1a202c;
+        margin-bottom: .75rem;
+    }
+
+    .post-content {
+        font-size: .95rem;
+        color: #4b5563;
+        line-height: 1.55;
+        margin-bottom: 1rem;
+    }
+
+    .truncated {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        max-height: 6rem;
+    }
+
+    .toggle-content {
+        font-size: .875rem;
+        color: #4f46e5;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .toggle-content:hover {
+        text-decoration: underline;
+    }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        font-size: .85rem;
+        color: #6b7280;
+        margin-bottom: .75rem;
+    }
+
+    .date-info {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: .5rem;
+    }
+
+    .interaction-buttons {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    /* -------- Butonlar -------- */
+    .like-button,
+    .comment-button {
+        display: flex;
+        align-items: center;
+        gap: .35rem;
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: #6b7280;
+        cursor: pointer;
+    }
+
+    .comment-button {
+        text-decoration: none;
+    }
+
+    .like-button:hover,
+    .comment-button:hover {
+        color: #4f46e5;
+    }
+
+    .icon {
+        width: 1.15rem;
+        height: 1.15rem;
+        flex-shrink: 0;
+    }
+
+    /* Kalp dolu hâli */
+    .heart-icon .heart-filled {
+        display: none;
+    }
+
+    .heart-icon.filled .heart-filled {
+        display: block;
+    }
+
+    .heart-icon.filled .heart-unfilled {
+        display: none;
+    }
+
+    /* -------- Responsive -------- */
+    @media(max-width:768px) {
+        .post-meta {
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .interaction-buttons {
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+    }
+</style>
+
+<script>
+    async function handleLikeEvent(button) {
+        const liked = button.dataset.liked === "true";
+        const postId = button.dataset.postId;
+
+        try {
+            const method = liked ? "DELETE" : "POST";
+            const res = await fetch(`/user/post/like/${postId}`, {
+                method,
+                headers: { "Content-Type": "application/json" },
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (res.status === 401 && data.redirect) {
+                    window.location.href = data.redirect; // /auth/login
+                }
+                return;
+            }
+
+            // UI'yı güncelle
+            button.dataset.liked = !liked;
+            button.querySelector(".heart-icon").classList.toggle("filled");
+            button.querySelector(".like-count").textContent = data.likes;
+        } catch (error) {
+            console.error("Hata:", error);
+            alert("Sunucu hatası!");
+        }
+    }
+
+    function toggleContent(button) {
+        const content = button.previousElementSibling;
+        const collapsed = button.dataset.state === "collapsed";
+        content.classList.toggle("truncated", !collapsed);
+        button.textContent = collapsed ? "daha az göster" : "devamını göster…";
+        button.dataset.state = collapsed ? "expanded" : "collapsed";
+    }
+
+
+</script>

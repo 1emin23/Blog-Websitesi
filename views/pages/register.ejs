@@ -3,7 +3,7 @@
     <div class="page-container">
         <div class="content-wrapper">
             <h2 class="section-title">Kayıt Ol</h2>
-            <form action="/register" method="POST" class="form">
+            <form action="/auth/register" method="POST" class="form">
                 <% if (registerError) { %>
                     <p class="error-message">
                         <%= registerError %>
@@ -24,7 +24,8 @@
                         </div>
                         <button type="submit" class="action-button">Kayıt Ol</button>
             </form>
-            <p class="form-footer">Zaten hesabın var mı? <a href="/login" class="action-link" style="color: blue;">Giriş
+            <p class="form-footer">Zaten hesabın var mı? <a href="/auth/login" class="action-link"
+                    style="color: blue;">Giriş
                     Yap</a></p>
         </div>
     </div>

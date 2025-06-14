@@ -1,0 +1,129 @@
+<%- include('../partials/header.ejs') %>
+
+    <div class="profile-wrapper">
+
+        <!-- Beğenilen gönderiler -->
+        <section class="profile-section">
+            <h3>Beğendiğim Gönderiler</h3>
+            <% if (likedPosts && likedPosts.length) { %>
+                <% likedPosts.forEach(post=> { %>
+                    <article class="post-card">
+                        <h4 class="post-title">
+                            <%= post.title %>
+                        </h4>
+                        <p class="post-content">
+                            <%= post.content.substring(0,100) %>
+                        </p>
+                        <a class="action-button" href="/post/detail/<%= post._id %>">Detay</a>
+                    </article>
+                    <% }) %>
+                        <% } else { %>
+                            <p>Henüz beğenilen gönderi yok.</p>
+                            <% } %>
+        </section>
+
+        <!-- Yorum yapılan gönderiler -->
+        <section class="profile-section">
+            <h3>Yorum Yaptığım Gönderiler</h3>
+            <% if (commentedPosts && commentedPosts.length) { %>
+                <% commentedPosts.forEach(post=> { %>
+                    <article class="post-card">
+                        <h4 class="post-title">
+                            <%= post.title %>
+                        </h4>
+                        <p class="post-content">
+                            <%= post.content.substring(0,100) %>
+                        </p>
+                        <a class="action-button" href="/post/detail/<%= post._id %>#comments">Detay</a>
+                    </article>
+                    <% }) %>
+                        <% } else { %>
+                            <p>Henüz yorum yapılan gönderi yok.</p>
+                            <% } %>
+        </section>
+    </div>
+
+    <style>
+        /* --------- Profil sayfasına özel stiller --------- */
+        .profile-wrapper {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .profile-header {
+            margin-bottom: 2rem;
+        }
+
+        .profile-username {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .profile-section {
+            margin-bottom: 2rem;
+        }
+
+        .profile-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 1rem;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: .5rem;
+        }
+
+        .post-content {
+            font-size: .95rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: .5rem 1rem;
+            background: #4f46e5;
+            color: #fff;
+            border-radius: 6px;
+            font-size: .875rem;
+            transition: background .3s;
+        }
+
+        .action-button:hover {
+            background: #4338ca;
+        }
+
+        @media(max-width:768px) {
+            .profile-wrapper {
+                padding: .5rem;
+            }
+
+            .profile-username {
+                font-size: 1.25rem;
+            }
+
+            .profile-section h3 {
+                font-size: 1.125rem;
+            }
+
+            .post-title {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+
+    <%- include('../partials/footer.ejs') %>
