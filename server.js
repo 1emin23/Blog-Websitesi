@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const env = require("dotenv");
+const MongoStore = require("connect-mongo");
+const rateLimit = require("express-rate-limit");
 
 env.config();
 const PORT = process.env.PORT || 4000;
@@ -18,9 +20,30 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+    }),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Üretim ortamında HTTPS kullan
+    sameSite: "strict", // CSRF koruması için
     cookie: { maxAge: 1000 * 60 * 60 }, // 1 saatlik oturum
   })
 );
+app.set("trust proxy", 1);
+const limiter = rateLimit({
+  windowMs: 5 * 1000, // 5 saniye
+  max: 100, // 1 dakika içinde en fazla 100 istek yapılabilir
+  handler: (req, res) => {
+    res.status(429).render("pages/ratelimit", {
+      title: "Çok Fazla İstek",
+      message: `Çok fazla istek yaptınız. Lütfen 5 sn sonra tekrar deneyin.`,
+      user: req.session?.user || null,
+    });
+  },
+});
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
 
 // Her sayfaya kullanıcı bilgisini gönder
 app.use((req, res, next) => {

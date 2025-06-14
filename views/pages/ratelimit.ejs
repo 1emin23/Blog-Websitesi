@@ -1,0 +1,74 @@
+<%- include("../partials/header") %>
+
+    <section class="ratelimit-container">
+        <div class="ratelimit-card">
+            <h1 class="ratelimit-title">
+                <%= title %>
+            </h1>
+            <p class="ratelimit-message">
+                <%= message %>
+            </p>
+            <p class="ratelimit-info">
+                İnternet bağlantınızı kontrol edin veya biraz bekleyip tekrar deneyin. Bu bir güvenlik önlemidir.
+            </p>
+            <a href="/" class="ratelimit-btn">Anasayfaya Dön</a>
+        </div>
+    </section>
+
+    <%- include("../partials/footer") %>
+
+
+        <style>
+            .ratelimit-container {
+                min-height: 70vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 2rem;
+                background: #f9fafb;
+            }
+
+            .ratelimit-card {
+                background: #ffffff;
+                border-radius: 1rem;
+                padding: 2rem 2.5rem;
+                max-width: 500px;
+                width: 100%;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+                text-align: center;
+            }
+
+            .ratelimit-title {
+                font-size: 2rem;
+                font-weight: 600;
+                color: #111827;
+                margin-bottom: 1rem;
+            }
+
+            .ratelimit-message {
+                font-size: 1rem;
+                color: #dc2626;
+                margin-bottom: 0.5rem;
+            }
+
+            .ratelimit-info {
+                font-size: 0.95rem;
+                color: #6b7280;
+                margin-bottom: 1.5rem;
+            }
+
+            .ratelimit-btn {
+                display: inline-block;
+                padding: 0.6rem 1.2rem;
+                background-color: #2563eb;
+                color: #fff;
+                border-radius: 0.5rem;
+                text-decoration: none;
+                font-weight: 500;
+                transition: background-color 0.3s ease;
+            }
+
+            .ratelimit-btn:hover {
+                background-color: #1d4ed8;
+            }
+        </style>
