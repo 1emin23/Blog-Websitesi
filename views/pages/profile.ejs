@@ -14,7 +14,7 @@
                         <p class="post-content">
                             <%= post.content.substring(0,100) %>
                         </p>
-                        <a class="action-button" href="/post/detail/<%= post._id %>">Detay</a>
+                        <a class="action-button" href="/post/detail/comments/<%= post._id %>">Detay</a>
                     </article>
                     <% }) %>
                         <% } else { %>
@@ -34,7 +34,7 @@
                         <p class="post-content">
                             <%= post.content.substring(0,100) %>
                         </p>
-                        <a class="action-button" href="/post/detail/<%= post._id %>#comments">Detay</a>
+                        <a class="action-button" href="/post/detail/comments/<%= post._id %>">Detay</a>
                     </article>
                     <% }) %>
                         <% } else { %>
@@ -76,7 +76,7 @@
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
-            padding: 1.5rem;
+            padding: 1rem;
             margin-bottom: 1rem;
         }
 
@@ -110,6 +110,11 @@
         @media(max-width:768px) {
             .profile-wrapper {
                 padding: .5rem;
+            }
+
+            .action-button {
+                width: 100%;
+                text-align: center;
             }
 
             .profile-username {

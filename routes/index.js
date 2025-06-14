@@ -3,6 +3,6 @@ const router = express.Router();
 const postController = require("../controllers/postController.js");
 
 router.get("/", postController.home);
-router.get("/post/detail/:id", postController.detail);
+router.get("/post/detail/comments/:id", postController.detail);
 
 module.exports = router;
