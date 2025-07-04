@@ -37,11 +37,6 @@ Bu proje, sadece admin kullanıcılarının gönderi paylaşabildiği, kullanıc
 ## 🧱 Proje Yapısı
 ![fileStructure](https://github.com/user-attachments/assets/4ed662ee-71fe-456d-af56-97fe75c8020b)
 
-🧠 Ek Notlar
-Eğer frontend kısmı React ile yazılsaydı proje bir MERN Stack uygulaması olurdu.
-
-Ancak şimdiki haliyle klasik MVC + SSR (Server Side Rendering) yapısına sahip, anlaşılır bir mimari kullanılmıştır.
-
 
 ## 📦 Kurulum
 
